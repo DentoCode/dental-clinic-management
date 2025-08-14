@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - نظام إدارة عيادة الأسنان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-container"></div>
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar">
+            
+                <div class="sidebar-header">
+                    <div class="clinic-info">
+                        <div class="clinic-logo">
+                            <i class="fas fa-tooth"></i>
+                        </div>
+                        <div class="clinic-text">
+                            <h2>دينتال كير</h2>
+                            <p>عيادة الأسنان</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <div class="nav-section">
+                        <div class="nav-title">القائمة الرئيسية</div>
+                        <a href="#" class="nav-item active" data-tab="dashboard">
+                            <i class="fas fa-home"></i>
+                            <span class="nav-text">لوحة التحكم</span>
+                        </a>
+                        <a href="#" class="nav-item" data-tab="patients">
+                            <i class="fas fa-user-injured"></i>
+                            <span class="nav-text">المرضى</span>
+                        </a>
+                        <a href="#" class="nav-item" data-tab="treatments">
+                            <i class="fas fa-teeth"></i>
+                            <span class="nav-text">العلاجات</span>
+                        </a>
+                        <a href="#" class="nav-item" data-tab="radiology">
+                            <i class="fas fa-x-ray"></i>
+                            <span class="nav-text">الأشعة</span>
+                        </a>
+                        <a href="#" class="nav-item" data-tab="payments">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span class="nav-text">المدفوعات</span>
+                        </a>
+                        <a href="#" class="nav-item" data-tab="appointments">
+                            <i class="fas fa-calendar-check"></i>
+                            <span class="nav-text">المواعيد</span>
+                        </a>
+                    </div>
+                    
+                    <div class="nav-section">
+                        <div class="nav-title">الإدارة والتقارير</div>
+                        <a href="#" class="nav-item" data-tab="reports">
+                            <i class="fas fa-chart-line"></i>
+                            <span class="nav-text">التقارير</span>
+                        </a>
+                        <a href="#" class="nav-item" data-tab="settings">
+                            <i class="fas fa-cog"></i>
+                            <span class="nav-text">الإعدادات</span>
+                        </a>
+                    </div>
+                </nav>
+                
+                <div class="sidebar-footer">
+                    <p>الإصدار 1.0.0</p>
+                </div>
+            </aside>
+            
+            <!-- المحتوى الرئيسي -->
+            <main class="main-content">
+                <!-- شريط الرأس -->
+                <header class="topbar">
+                    <div class="sidebar-toggle" id="sidebarToggle">
+                            <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="page-title">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </div>
+                    
+                    <div class="topbar-actions">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">د. أحمد محمد</div>
+                                <div class="user-role">طبيب أسنان</div>
+                            </div>
+                        </div>
+                        
+                        <button class="logout-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </header>
+                
+                <!-- محتوى الصفحة -->
+                <div class="content-area">
+                    <!-- لوحة التحكم -->
+                    <div id="dashboard" class="tab-content active">
+                        <div class="content-header">
+                            <h2>لوحة التحكم</h2>
+                            <div class="date-display" id="currentDate"></div>
+                        </div>
+                        
+                        <div class="stats-container">
+                            <div class="stat-card">
+                                <div class="stat-icon patients">
+                                    <i class="fas fa-user-injured"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-title">المرضى</div>
+                                    <div class="stat-value" id="patientsCount">0</div>
+                                    <div class="stat-change">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>5% زيادة هذا الشهر</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon appointments">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-title">المواعيد</div>
+                                    <div class="stat-value" id="appointmentsCount">0</div>
+                                    <div class="stat-change">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>12% زيادة هذا الأسبوع</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon payments">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-title">المدفوعات</div>
+                                    <div class="stat-value" id="paymentsAmount">0</div>
+                                    <div class="stat-change">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>8% زيادة هذا الشهر</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon treatments">
+                                    <i class="fas fa-teeth"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-title">العلاجات</div>
+                                    <div class="stat-value" id="treatmentsCount">0</div>
+                                    <div class="stat-change">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>15% زيادة هذا الشهر</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-sections">
+                            <div class="section">
+                                <div class="section-header">
+                                    <h3>المواعيد القادمة</h3>
+                                    <button class="btn-action">
+                                        <i class="fas fa-plus"></i>
+                                        <span>إضافة موعد</span>
+                                    </button>
+                                </div>
+                                <div id="upcomingAppointments" class="appointments-list"></div>
+                            </div>
+                            
+                            <div class="section">
+                                <div class="section-header">
+                                    <h3>أحدث المدفوعات</h3>
+                                    <button class="btn-action">
+                                        <i class="fas fa-plus"></i>
+                                        <span>إضافة دفعة</span>
+                                    </button>
+                                </div>
+                                <div id="recentPayments" class="payments-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- المرضى -->
+                    <div id="patients" class="tab-content">
+                        <div class="content-header">
+                            <h2>إدارة المرضى</h2>
+                            <div class="actions">
+                                <button class="btn-action" id="addPatientBtn">
+                                    <i class="fas fa-plus"></i>
+                                    <span>إضافة مريض جديد</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="section">
+                            <div class="section-header">
+                                <h3>قائمة المرضى</h3>
+                                <div class="search-box">
+                                    <input type="text" id="patientSearch" placeholder="ابحث عن مريض...">
+                                    <button class="btn-icon">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table id="patientsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>اسم المريض</th>
+                                            <th>العمر</th>
+                                            <th>رقم الهاتف</th>
+                                            <th>تاريخ التسجيل</th>
+                                            <th>الإجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="patientsTableBody">
+                                        <!-- سيتم ملؤها بالبيانات -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ملف المريض -->
+                    <div id="patientProfile" class="tab-content">
+                        <div class="content-header">
+                            <button class="btn-back" id="backToPatientsBtn">
+                                <i class="fas fa-arrow-right"></i> العودة إلى المرضى
+                            </button>
+                            <h2>ملف المريض: <span id="patientNameHeader"></span></h2>
+                        </div>
+                        
+                        <div class="patient-header">
+                            <div class="patient-info">
+                                <div class="patient-avatar">
+                                    <i class="fas fa-user-injured"></i>
+                                </div>
+                                <div>
+                                    <h3 id="patientFullName"></h3>
+                                    <div class="patient-contact">
+                                        <span id="patientPhoneNumber"></span>
+                                        <span id="patientEmailAddress"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="patient-actions">
+                                <button class="action-btn email-btn" title="إرسال بريد إلكتروني">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                                <button class="action-btn sms-btn" title="إرسال رسالة نصية">
+                                    <i class="fas fa-sms"></i>
+                                </button>
+                                <button class="action-btn whatsapp-btn" title="إرسال رسالة واتساب">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
+                                <button class="action-btn call-btn" title="إجراء مكالمة">
+                                    <i class="fas fa-phone"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="patient-cards">
+                            <!-- البطاقات ستضاف ديناميكيًا -->
+                        </div>
+                        
+                        <div class="card-content">
+                            <!-- محتوى البطاقة المحددة سيظهر هنا -->
+                        </div>
+                    </div>
+
+                    
+                    <!-- باقي الأقسام سيتم إضافتها بنفس النمط -->
+                    <div id="treatments" class="tab-content">
+                        <div class="content-header">
+                            <h2>إدارة العلاجات</h2>
+                            <div class="actions">
+                                <button class="btn-action">
+                                    <i class="fas fa-plus"></i>
+                                    <span>إضافة علاج جديد</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- محتوى العلاجات -->
+                    </div>
+                    
+                    <div id="radiology" class="tab-content">
+                        <div class="content-header">
+                            <h2>إدارة الأشعة</h2>
+                            <div class="actions">
+                                <button class="btn-action">
+                                    <i class="fas fa-plus"></i>
+                                    <span>إضافة صورة أشعة</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- محتوى الأشعة -->
+                    </div>
+                    
+                    <div id="payments" class="tab-content">
+                        <div class="content-header">
+                            <h2>إدارة المدفوعات</h2>
+                            <div class="actions">
+                                <button class="btn-action">
+                                    <i class="fas fa-plus"></i>
+                                    <span>إضافة دفعة</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- محتوى المدفوعات -->
+                    </div>
+                    
+                    <div id="appointments" class="tab-content">
+                        <div class="content-header">
+                            <h2>إدارة المواعيد</h2>
+                            <div class="actions">
+                                <button class="btn-action">
+                                    <i class="fas fa-plus"></i>
+                                    <span>إضافة موعد</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- محتوى المواعيد -->
+                    </div>
+                    
+                    <div id="reports" class="tab-content">
+                        <div class="content-header">
+                            <h2>التقارير والإحصائيات</h2>
+                        </div>
+                        <!-- محتوى التقارير -->
+                    </div>
+                    
+                    <div id="settings" class="tab-content">
+                        <div class="content-header">
+                            <h2>إعدادات العيادة</h2>
+                        </div>
+                        <!-- محتوى الإعدادات -->
+                    </div>
+                </div>
+            </main>
+    </div>
+    
+    <!-- نافذة إضافة/تعديل المريض -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalPatientTitle">إضافة مريض جديد</h3>
+            <form id="patientForm">
+                <input type="hidden" id="patientId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="patientName">اسم المريض *</label>
+                        <input type="text" id="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientAge">العمر *</label>
+                        <input type="number" id="patientAge" required min="1">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="patientPhone">رقم الهاتف *</label>
+                        <input type="tel" id="patientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientEmail">البريد الإلكتروني</label>
+                        <input type="email" id="patientEmail">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="patientAddress">العنوان</label>
+                    <textarea id="patientAddress" rows="2"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="patientNotes">ملاحظات</label>
+                    <textarea id="patientNotes" rows="3"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelPatientBtn">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/common.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/patient-profile.js"></script>
+    <script src="js/patients.js"></script>
+    <script src="js/treatments.js"></script>
+    <script src="js/radiology.js"></script>
+    <script src="js/payments.js"></script>
+    <script src="js/appointments.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>
