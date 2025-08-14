@@ -3,23 +3,11 @@ function initPatients() {
     loadPatients();
     
     // أحداث الأزرار
-    document.getElementById('addPatientBtn').addEventListener('click', function() {
-        openPatientModal(); // بدون أي معامل
-    });
-    
+    document.getElementById('addPatientBtn').addEventListener('click', () => openPatientModal());
     document.getElementById('cancelPatientBtn').addEventListener('click', closePatientModal);
     document.getElementById('patientForm').addEventListener('submit', savePatient);
     document.getElementById('patientSearch').addEventListener('input', searchPatients);
-    
-    // تأكيد ربط زر الإغلاق
     document.querySelector('#patientModal .close').addEventListener('click', closePatientModal);
-
-        document.querySelectorAll('.btn-view').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const patientId = this.getAttribute('data-id');
-            viewPatient(patientId);
-        });
-    });
 }
 
 // تحميل المرضى
@@ -35,6 +23,7 @@ function loadPatients() {
     
     patients.forEach((patient, index) => {
         const tr = document.createElement('tr');
+        tr.dataset.patientId = patient.id;
         tr.innerHTML = `
             <td>${index + 1}</td>
             <td>${patient.name}</td>
@@ -42,30 +31,39 @@ function loadPatients() {
             <td>${patient.phone}</td>
             <td>${new Date(patient.registrationDate).toLocaleDateString('ar-EG')}</td>
             <td class="action-buttons">
-                <button class="action-btn btn-edit" onclick="editPatient(${patient.id})">
+                <button class="action-btn btn-edit" aria-label="تعديل">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="action-btn btn-delete" onclick="deletePatient(${patient.id})">
+                <button class="action-btn btn-delete" aria-label="حذف">
                     <i class="fas fa-trash"></i>
                 </button>
-                <button class="action-btn btn-view" data-id="${patient.id}">
+                <button class="action-btn btn-view" aria-label="عرض">
                     <i class="fas fa-eye"></i>
                 </button>
             </td>
         `;
         tbody.appendChild(tr);
     });
-    
-    // ربط أحداث أزرار العرض بعد إنشاء الجدول
-    bindViewButtons();
+
+    // ربط الأحداث للأزرار الجديدة
+    bindActionButtons();
 }
 
-function bindViewButtons() {
-    document.querySelectorAll('.btn-view').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const patientId = this.getAttribute('data-id');
+function bindActionButtons() {
+    document.getElementById('patientsTableBody').addEventListener('click', function(e) {
+        const button = e.target.closest('button');
+        if (!button) return;
+
+        const tr = button.closest('tr');
+        const patientId = tr.dataset.patientId;
+
+        if (button.classList.contains('btn-edit')) {
+            editPatient(patientId);
+        } else if (button.classList.contains('btn-delete')) {
+            deletePatient(patientId);
+        } else if (button.classList.contains('btn-view')) {
             viewPatient(patientId);
-        });
+        }
     });
 }
 
@@ -230,10 +228,6 @@ function viewPatient(id) {
     }
 }
 
-
-
-
-
 // البحث عن المرضى
 function searchPatients() {
     const searchTerm = document.getElementById('patientSearch').value.toLowerCase();
@@ -253,6 +247,7 @@ function searchPatients() {
     
     filtered.forEach((patient, index) => {
         const tr = document.createElement('tr');
+        tr.dataset.patientId = patient.id;
         tr.innerHTML = `
             <td>${index + 1}</td>
             <td>${patient.name}</td>
@@ -260,31 +255,19 @@ function searchPatients() {
             <td>${patient.phone}</td>
             <td>${new Date(patient.registrationDate).toLocaleDateString('ar-EG')}</td>
             <td class="action-buttons">
-                <button class="action-btn btn-edit" onclick="editPatient(${patient.id})">
+                <button class="action-btn btn-edit" aria-label="تعديل">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="action-btn btn-delete" onclick="deletePatient(${patient.id})">
+                <button class="action-btn btn-delete" aria-label="حذف">
                     <i class="fas fa-trash"></i>
                 </button>
-                <button class="action-btn btn-view" onclick="viewPatient(${patient.id})">
+                <button class="action-btn btn-view" aria-label="عرض">
                     <i class="fas fa-eye"></i>
                 </button>
             </td>
         `;
         tbody.appendChild(tr);
     });
-}
-
-function closePatientModal() {
-    const modal = document.getElementById('patientModal');
-    modal.classList.remove('active');
-    
-    // تأثير إغلاق متحرك
-    modal.querySelector('.modal-content').style.animation = 'modalClose 0.3s ease-in';
-    setTimeout(() => {
-        modal.classList.remove('active');
-        modal.querySelector('.modal-content').style.animation = '';
-    }, 300);
 }
 
 // تهيئة إدارة المرضى عند تحميل الصفحة
