@@ -13,13 +13,6 @@ function initPatients() {
     
     // تأكيد ربط زر الإغلاق
     document.querySelector('#patientModal .close').addEventListener('click', closePatientModal);
-
-        document.querySelectorAll('.btn-view').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const patientId = this.getAttribute('data-id');
-            viewPatient(patientId);
-        });
-    });
 }
 
 // تحميل المرضى
@@ -48,7 +41,7 @@ function loadPatients() {
                 <button class="action-btn btn-delete" onclick="deletePatient(${patient.id})">
                     <i class="fas fa-trash"></i>
                 </button>
-                <button class="action-btn btn-view" data-id="${patient.id}">
+                <button class="action-btn btn-view" onclick="viewPatient(${patient.id})">
                     <i class="fas fa-eye"></i>
                 </button>
             </td>
@@ -56,17 +49,6 @@ function loadPatients() {
         tbody.appendChild(tr);
     });
     
-    // ربط أحداث أزرار العرض بعد إنشاء الجدول
-    bindViewButtons();
-}
-
-function bindViewButtons() {
-    document.querySelectorAll('.btn-view').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const patientId = this.getAttribute('data-id');
-            viewPatient(patientId);
-        });
-    });
 }
 
 // فتح نافذة إضافة مريض
